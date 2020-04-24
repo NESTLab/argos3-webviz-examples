@@ -50,14 +50,17 @@
 <body>
 
     <h3>Argos3 Webviz experiment control using html form</h3>
-    Note: Connection gets auto disconnected after some timeout. 
+    Note: Connection gets auto disconnected after some timeout.
     <hr>
     <div>Client connection status: <span id="status"></span></div>
     <br>
     <div id="buttons">
         <button onclick='send({"command": "play"})'> Start Experiment </button>
-
         <button onclick='send({"command": "pause"})'> Pause Experiment </button>
+        <button onclick='send({"command": "fastforward", "step": "10"})'> Fast forward Experiment </button>
+        <button onclick='send({"command": "step"})'> Step Experiment </button>
+        <button onclick='send({"command": "terminate"})'> Stop Experiment </button>
+        <button onclick='send({"command": "reset"})'> Reset Experiment </button>
     </div>
 
     <hr>

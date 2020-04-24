@@ -46,8 +46,8 @@ Here we use the example webclient provided by "argos3-webviz".
 
 ### Basic html form
 
-In this example experiment, an experiment is shown to be controlled
-using a html form.
+In this example experiment, the experiment is shown to be controlled
+using a html form, and inbuilt WebSockets functionality of javascript.
 
 The experiment is empty (no robots) we only see and control the `State`
 of the experiment.
@@ -60,6 +60,24 @@ $ argos3 -c basic_html_form/empty_experiment.argos
 and run a static webserver to host html files in another terminal
 ```console
 $ python3 -m http.server --directory ./basic_html_form/client 8000
+```
+
+Now you can open http://localhost:8000/ in any `modern` browser.
+
+### Basic 2D Viewer
+
+In this example experiment, Chart.js is used to show the 2D arena of robots.
+
+The swarm experiment is diffusion as of above.
+
+To Run, run argos in one terminal
+```console
+$ argos3 -c basic_2D_viewer/diffusion_10_2D.argos
+```
+
+and run a static webserver to host html files in another terminal
+```console
+$ python3 -m http.server --directory ./basic_2D_viewer/client 8000
 ```
 
 Now you can open http://localhost:8000/ in any `modern` browser.
