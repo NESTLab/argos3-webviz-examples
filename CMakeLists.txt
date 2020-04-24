@@ -23,3 +23,4 @@ link_directories(${ARGOS_LIBRARY_DIRS})
 
 
 add_subdirectory(diffusion)
+add_subdirectory(user_functions)

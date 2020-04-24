@@ -70,7 +70,7 @@ Now you can open http://localhost:8000/ in any `modern` browser.
 
 > ![Basic 2D Viewer](basic_2D_viewer/screenshot.gif)
 
-In this example experiment, Chart.js is used to show the 2D arena of robots.
+In this example experiment, fabric.js is used to show the 2D arena of robots.
 
 The swarm experiment is diffusion as of above.
 
@@ -102,3 +102,31 @@ and run python client in another terminal
 ```console
 $ python3 ./python_client/client.py
 ```
+
+# User functions
+
+This example is taken from argos3-examples,
+
+The arena is divided in two areas: a grey area that serves as nest, where
+the robots are initially deployed; and a white area where food items
+are scattered. The task of the foot-bots is to exit the nest, search
+for food items, grab them and bring them back to the nest. To simplify
+control, food items are just drawn as black spots on the ground, and
+when a robot passes over a food item it automatically grabs it. When a
+robot is transporting a food item, a cylinder is drawn on top of
+it. Each robot can transport only one item per time. Once a robot has
+grabbed an item, it must bring it back to the nest. The direction
+to/away from the nest is detectable through light sensors, that read
+the position of a set of lights displaced over the nest.
+
+To Run, start argos in one terminal
+```console
+$ argos3 -c user_functions/foraging.argos
+```
+
+and run a static webserver to host html files in another terminal
+```console
+$ python3 -m http.server --directory ./user_functions/client 8000
+```
+
+Now you can open http://localhost:8000/ in any `modern` browser.
