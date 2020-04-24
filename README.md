@@ -29,7 +29,7 @@ Every example has two parts, a Serverside with argos and webviz, and a client si
 In this example experiment, a foot-bot performs obstacle avoidance
 while navigating in an small square environment.
 
-To Run, run argos in one terminal
+To Run, start argos in one terminal
 ```console
 $ argos3 -c diffusion/diffusion_1.argos
 ```
@@ -44,16 +44,17 @@ Now you can open http://localhost:8000/ in any `modern` browser.
 Here we use the example webclient provided by "argos3-webviz".
 
 
-### Basic html form
+# Basic html form
 
-![Basic html form](basic_html_form/screenshot.png)
+> ![Basic html form](basic_html_form/screenshot.png)
+
 In this example experiment, the experiment is shown to be controlled
 using a html form, and inbuilt WebSockets functionality of javascript.
 
 The experiment is empty (no robots) we only see and control the `State`
 of the experiment.
 
-To Run, run argos in one terminal
+To Run, start argos in one terminal
 ```console
 $ argos3 -c basic_html_form/empty_experiment.argos
 ```
@@ -65,15 +66,15 @@ $ python3 -m http.server --directory ./basic_html_form/client 8000
 
 Now you can open http://localhost:8000/ in any `modern` browser.
 
-### Basic 2D Viewer
+# Basic 2D Viewer
 
-![Basic 2D Viewer](basic_2D_viewer/screenshot.gif)
+> ![Basic 2D Viewer](basic_2D_viewer/screenshot.gif)
 
 In this example experiment, Chart.js is used to show the 2D arena of robots.
 
 The swarm experiment is diffusion as of above.
 
-To Run, run argos in one terminal
+To Run, start argos in one terminal
 ```console
 $ argos3 -c basic_2D_viewer/diffusion_10_2D.argos
 ```
@@ -84,3 +85,20 @@ $ python3 -m http.server --directory ./basic_2D_viewer/client 8000
 ```
 
 Now you can open http://localhost:8000/ in any `modern` browser.
+
+# Python client
+
+Install websocket_client using
+```console
+$ pip install websocket_client
+```
+
+To Run, start argos in one terminal
+```console
+$ argos3 -c ./python_client/empty_experiment.argos
+```
+
+and run python client in another terminal
+```console
+$ python3 ./python_client/client.py
+```
