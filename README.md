@@ -23,6 +23,7 @@ Every example has two parts, a Serverside with argos and webviz, and a client si
 
 > Few of the examples here are taken from [argos3-examples](https://github.com/ilpincy/argos3-examples) with added Webviz as the visualizer.
 
+**PLEASE NOTE:** Make sure that port 3000 is not being used by any other process or existing argos3 webviz experiment, or you need to change experiment file and client accordingly.
 ### DIFFUSION
 
 In this example experiment, a foot-bot performs obstacle avoidance
@@ -41,3 +42,24 @@ $ python3 -m http.server --directory ./common 8000
 Now you can open http://localhost:8000/ in any `modern` browser.
 
 Here we use the example webclient provided by "argos3-webviz".
+
+
+### Basic html form
+
+In this example experiment, an experiment is shown to be controlled
+using a html form.
+
+The experiment is empty (no robots) we only see and control the `State`
+of the experiment.
+
+To Run, run argos in one terminal
+```console
+$ argos3 -c basic_html_form/empty_experiment.argos
+```
+
+and run a static webserver to host html files in another terminal
+```console
+$ python3 -m http.server --directory ./basic_html_form/client 8000
+```
+
+Now you can open http://localhost:8000/ in any `modern` browser.

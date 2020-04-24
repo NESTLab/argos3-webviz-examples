@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argos3 client example: Basic html form</title>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        #status {
+            font-weight: bolder;
+        }
+
+        #events,
+        #logs {
+            padding: 10px;
+            border: 1px solid black;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        #buttons {
+            display: inline;
+        }
+
+        #panels {
+            display: flex;
+        }
+
+        #panels>div {
+            flex: 1;
+            max-width: 50%;
+            border: 1px dashed #f0f0f0;
+            padding: 10px;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3>Argos3 Webviz experiment control using html form</h3>
+    Note: Connection gets auto disconnected after some timeout. 
+    <hr>
+    <div>Client connection status: <span id="status"></span></div>
+    <br>
+    <div id="buttons">
+        <button onclick='send({"command": "play"})'> Start Experiment </button>
+
+        <button onclick='send({"command": "pause"})'> Pause Experiment </button>
+    </div>
+
+    <hr>
+
+    <div id="panels">
+        <div>
+            <h4>Events from argos</h4>
+            <div id="events"></div>
+        </div>
+        <div>
+            <h4>Logs from argos</h4>
+            <div id="logs"></div>
+        </div>
+    </div>
+    <!--  -->
+    <script>
+        /* Connect to Webviz and get only events */
+        var socket = new WebSocket("ws://localhost:3000?events,logs");
+
+        var statusDom = document.getElementById("status");
+        var eventsDom = document.getElementById("events");
+        var logsDom = document.getElementById("logs");
+
+        socket.onopen = function (e) {
+            statusDom.innerHTML = "<span class='green'>[open] Connection established</span>";
+        };
+
+        var send = function (json_object) {
+            socket.send(JSON.stringify(json_object));
+        }
+
+        /* Any new message from Argos */
+        socket.onmessage = function (event) {
+            var json = JSON.parse(event.data)
+
+            if (json.type == "event") {
+                eventsDom.innerHTML += event.data + "<br>";
+            } else if (json.type == "log") {
+                /* Loop through all log messages */
+                for (var i = 0; i < json.messages.length; i++) {
+                    const message = json.messages[i];
+
+                    // if its a normal log message
+                    if (message.log_type == "LOG") {
+                        logsDom.innerHTML += message.log_message + "<br>";
+                    } else if (message.log_type == "LOGERR") {
+                        logsDom.innerHTML += `<span class='red'>
+                            ${message.log_message}
+                            </span><br>`;
+                    }
+                }
+            }
+        };
+
+        socket.onclose = function (event) {
+            if (event.wasClean) {
+                statusDom.innerHTML = `<span class='red'>[close] Connection closed cleanly, code=${event.code} reason=${event.reason} </span>`;
+            } else {
+                // e.g. server process killed or network down
+                // event.code is usually 1006 in this case
+                statusDom.innerHTML = `<span class='red'>[close] Connection died</span>`;
+            }
+        };
+
+        socket.onerror = function (error) {
+            statusDom.innerHTML = `<span class='red'>[error] ${error.message}</span>`;
+        };
+    </script>
+</body>
+
+</html>

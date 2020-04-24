@@ -23,9 +23,7 @@
           or set to zero, this value is taken from the clock and a warning
           message is displayed.
     -->
-    <experiment length="0"
-                ticks_per_second="10"
-                random_seed="124" />
+    <experiment length="0" ticks_per_second="10" random_seed="124" />
   </framework>
 
   <!-- *************** -->
@@ -49,8 +47,7 @@
         - library: the path to the compiled library containing you
           controller.
     -->
-    <footbot_diffusion_controller id="fdc"
-                                  library="build/diffusion/libfootbot_diffusion.so">
+    <footbot_diffusion_controller id="fdc" library="build/diffusion/libfootbot_diffusion.so">
       <!--
           The <actuators> section contains a list of the actuators used by
           this controller.
@@ -130,7 +127,7 @@
     <!-- Place a foot-bot in the origin and bind it to the controller -->
     <foot-bot id="fb_0">
       <body position="0,0,0" orientation="0,0,0" />
-      <controller config="fdc"/>
+      <controller config="fdc" />
     </foot-bot>
 
   </arena>
@@ -178,7 +175,7 @@
       $ argos3 -q visualizations
   -->
   <visualization>
-     <!--
+    <!--
        defaults to 
        <webviz port=3000
          broadcast_frequency=10
