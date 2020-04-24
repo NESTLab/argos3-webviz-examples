@@ -67,6 +67,8 @@ Now you can open http://localhost:8000/ in any `modern` browser.
 
 ### Basic 2D Viewer
 
+![Basic 2D Viewer](basic_2D_viewer/screenshot.gif)
+
 In this example experiment, Chart.js is used to show the 2D arena of robots.
 
 The swarm experiment is diffusion as of above.

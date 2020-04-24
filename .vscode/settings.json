@@ -1,0 +1,9 @@
+{
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": true,
+    "editor.renderLineHighlight": "all",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.wordWrapColumn": 80,
+    "git.enableCommitSigning": true
+}

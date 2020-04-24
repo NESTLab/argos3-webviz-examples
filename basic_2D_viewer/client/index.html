@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Viewer</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="body">
+        <div id="graph_container">
+            <canvas id="graph"></canvas>
+        </div>
+        <div class="buttons">
+            <button onclick='send({"command": "play"})'>Play</button>
+            <button onclick='send({"command": "pause"})'>Pause</button>
+            <button onclick='send({"command": "fastforward", "steps": 10})'>Fast forward</button>
+            <button onclick='send({"command": "step"})'>Step</button>
+            <button onclick='send({"command": "terminate"})'>Stop</button>
+            <button onclick='send({"command": "reset"})'>Reset</button>
+        </div>
+        <div class="info">
+            <div>
+                Status: <span id="status"></span>
+            </div>
+            <div>
+                Steps: <span id="step"></span>
+            </div>
+            <div>
+                Experiment state: <span id="state"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Using Chart.js  -->
+    <script src="fabric.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        var canvas_size = 500
+        var OFFSET = canvas_size / 2
+        var SCALE = canvas_size / 5
+        var canvas = new fabric.StaticCanvas('graph',
+            {
+                // backgroundColor: 'rgb(225,225,225)',
+                width: canvas_size,
+                height: canvas_size,
+                centeredRotation: true,
+                centeredScaling: true
+                // containerClassName: 'theCanvas',
+                // preserveObjectStacking: true,
+            });
+
+        /* Add walls */
+        /* Top */
+        canvas.add(new fabric.Rect({
+            left: OFFSET,
+            top: SCALE * 0.5,
+            fill: 'black',
+            width: SCALE * 4,
+            height: SCALE * 0.1,
+            originX: "center",
+            originY: "center"
+        }));
+        /* Bottom */
+        canvas.add(new fabric.Rect({
+            left: OFFSET,
+            top: SCALE * 0.5 + SCALE * 4,
+            fill: 'black',
+            width: SCALE * 4,
+            height: SCALE * 0.1,
+            originX: "center",
+            originY: "center"
+        }));
+        /* left */
+        canvas.add(new fabric.Rect({
+            left: SCALE * 0.5,
+            top: OFFSET,
+            fill: 'black',
+            width: SCALE * 0.1,
+            height: SCALE * 4.1,
+            originX: "center",
+            originY: "center"
+        }));
+        /* right */
+        canvas.add(new fabric.Rect({
+            left: SCALE * 0.5 + SCALE * 4,
+            top: OFFSET,
+            fill: 'black',
+            width: SCALE * 0.1,
+            height: SCALE * 4.1,
+            originX: "center",
+            originY: "center"
+        }));
+
+        /* Add robots */
+        var robots = []
+        for (var i = 0; i < 10; i++) {
+            var robot = new fabric.Circle({
+                radius: 8,
+                fill: 'red',
+                left: 0,
+                top: 0,
+                originX: "center",
+                originY: "center",
+                strokeWidth: 15,
+                stroke: 'rgba(100,200,200,0.5)'
+            });
+            robots.push(robot)
+            canvas.add(robot)
+        }
+
+        /* Add obstacles */
+        var boxes = []
+        for (var i = 0; i < 5; i++) {
+            var box = new fabric.Rect({
+                left: 0,
+                top: 0,
+                fill: '#337',
+                width: SCALE * 0.3,
+                height: SCALE * 0.3,
+                originX: "center",
+                originY: "center"
+            });
+            boxes.push(box)
+            canvas.add(box)
+        }
+
+        var cylinders = []
+        for (var i = 0; i < 5; i++) {
+            var cylinder = new fabric.Circle({
+                radius: SCALE * 0.15,
+                fill: '#337',
+                left: 0,
+                top: 0,
+                originX: "center",
+                originY: "center"
+            });
+            cylinders.push(cylinder)
+            canvas.add(cylinder)
+        }
+
+    </script>
+</body>
+
+</html>
