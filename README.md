@@ -46,6 +46,7 @@ Here we use the example webclient provided by "argos3-webviz".
 
 ### Basic html form
 
+![Basic html form](basic_html_form/screenshot.png)
 In this example experiment, the experiment is shown to be controlled
 using a html form, and inbuilt WebSockets functionality of javascript.
 
