@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Viewer</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="body">
+        <div id="graph_container">
+            <canvas id="graph"></canvas>
+        </div>
+        <div class="buttons">
+            <button onclick='send({"command": "play"})'>Play</button>
+            <button onclick='send({"command": "pause"})'>Pause</button>
+            <button onclick='send({"command": "fastforward", "steps": 5})'>Fast forward</button>
+            <button onclick='send({"command": "step"})'>Step</button>
+            <button onclick='send({"command": "terminate"})'>Stop</button>
+            <button onclick='send({"command": "reset"})'>Reset</button>
+        </div>
+        <div class="info">
+            <div>
+                Status: <span id="status"></span>
+            </div>
+            <div>
+                Steps: <span id="step"></span>
+            </div>
+            <div>
+                Experiment state: <span id="state"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Using Chart.js  -->
+    <script src="fabric.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        var canvas_size = 500
+
+        var OFFSET = canvas_size / 2
+        var SCALE = canvas_size / 5
+        var canvas = new fabric.StaticCanvas('graph',
+            {
+                width: canvas_size,
+                height: canvas_size,
+                centeredRotation: true,
+                centeredScaling: true,
+            });
+
+
+        /* Add robots */
+        var robots = []
+        for (var i = 0; i < 20; i++) {
+            var robot = new fabric.Circle({
+                radius: 8,
+                fill: 'red',
+                left: 0,
+                top: 0,
+                originX: "center",
+                originY: "center",
+                strokeWidth: 3,
+                objectCaching: false,
+
+                stroke: 'rgba(100,200,200,1)'
+            });
+            robots.push(robot)
+            canvas.add(robot)
+        }
+
+
+    </script>
+</body>
+
+</html>
