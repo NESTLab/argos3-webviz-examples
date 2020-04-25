@@ -1,3 +1,79 @@
+//
+var ctx = document.getElementById('chart');
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    datasets: [{
+      label: "Walking Footbots",
+      borderWidth: 1,
+      backgroundColor: "rgba(75,192,192,0.4)",
+      borderColor: "rgba(75,192,192,1)",
+      data: [],
+      hoverBackgroundColor: "rgba(75,192,192,0.7)",
+    },
+    {
+      label: "Resting Footbots",
+      borderWidth: 1,
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+      data: [],
+      hoverBackgroundColor: 'rgba(255, 99, 132, 0.6)',
+    }]
+  },
+  options: {
+    tooltips: {
+      mode: 'index',
+      axis: 'y'
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+
+    scales: {
+      xAxes: [{
+        stacked: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'steps'
+        }
+      }],
+      yAxes: [{
+        stacked: true,
+        ticks: {
+          suggestedMax: 20,
+          suggestedMin: 0,
+          stepSize: 1
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'no. of footbots'
+        },
+        position: 'left'
+      }, {
+        stacked: true,
+        ticks: {
+          suggestedMax: 20,
+          suggestedMin: 0,
+          stepSize: 1,
+          reverse: true
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'no. of footbots'
+        },
+        position: 'right'
+      }]
+    },
+    animation: {
+      duration: 0 // general animation time
+    },
+    hover: {
+      animationDuration: 0 // duration of animations when hovering an item
+    },
+    responsiveAnimationDuration: 0 // animation duration after a resize
+  }
+});
+
+
 /* Connect to Webviz and get only broadcast messages */
 var socket = new WebSocket("ws://localhost:3000?broadcasts");
 
@@ -14,12 +90,32 @@ var send = function (json_object) {
   socket.send(JSON.stringify(json_object));
 }
 
+var oldGraphStep = 0;
+
 /* Any new message from Argos */
 socket.onmessage = function (event) {
   var json = JSON.parse(event.data)
 
-  // console.log(json.extra_data);
+  if (json.extra_data) {
 
+    /* Only draw graph if step changes */
+
+    if (oldGraphStep != json.extra_data.step) {
+      /* Only keep 15 recent entries */
+      if (myChart.data.labels.length > 15) {
+        myChart.data.labels.shift();
+        myChart.data.datasets[0].data.shift();
+
+        myChart.data.datasets[1].data.shift();
+      }
+      myChart.data.labels.push(json.extra_data.step);
+      myChart.data.datasets[0].data.push(json.extra_data.walking_fb);
+      myChart.data.datasets[1].data.push(json.extra_data.resting_fb);
+      myChart.update();
+
+      oldGraphStep = json.extra_data.step
+    }
+  }
   stateDom.innerHTML = json.state
   stepDom.innerHTML = json.steps
 
@@ -78,7 +174,7 @@ socket.onerror = function (error) {
 
 /* Responsive canvas */
 function resize() {
-  var canvasSizer = document.getElementById("graph_container");
+  var canvasSizer = document.getElementById("ui_2d_canvas_container");
   // var canvasScaleFactor = canvasSizer.offsetWidth / canvas_size;
   var width = canvasSizer.offsetWidth;
   var height = canvasSizer.offsetHeight;

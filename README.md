@@ -24,7 +24,8 @@ Every example has two parts, a Serverside with argos and webviz, and a client si
 > Few of the examples here are taken from [argos3-examples](https://github.com/ilpincy/argos3-examples) with added Webviz as the visualizer.
 
 **PLEASE NOTE:** Make sure that port 3000 is not being used by any other process or existing argos3 webviz experiment, or you need to change experiment file and client accordingly.
-### DIFFUSION
+
+# 1. DIFFUSION
 
 In this example experiment, a foot-bot performs obstacle avoidance
 while navigating in an small square environment.
@@ -44,7 +45,7 @@ Now you can open http://localhost:8000/ in any `modern` browser.
 Here we use the example webclient provided by "argos3-webviz".
 
 
-# Basic html form
+# 2. Basic html form
 
 > ![Basic html form](basic_html_form/screenshot.png)
 
@@ -66,7 +67,7 @@ $ python3 -m http.server --directory ./basic_html_form/client 8000
 
 Now you can open http://localhost:8000/ in any `modern` browser.
 
-# Basic 2D Viewer
+# 3. Basic 2D Viewer
 
 > ![Basic 2D Viewer](basic_2D_viewer/screenshot.gif)
 
@@ -86,7 +87,7 @@ $ python3 -m http.server --directory ./basic_2D_viewer/client 8000
 
 Now you can open http://localhost:8000/ in any `modern` browser.
 
-# Python client
+# 4. Python client
 
 Install websocket_client using
 ```console
@@ -103,7 +104,11 @@ and run python client in another terminal
 $ python3 ./python_client/client.py
 ```
 
-# User functions
+# 5. User functions
+
+
+> ![User functions](user_functions/screenshot.gif)
+
 
 This example is taken from argos3-examples,
 
@@ -118,6 +123,10 @@ it. Each robot can transport only one item per time. Once a robot has
 grabbed an item, it must bring it back to the nest. The direction
 to/away from the nest is detectable through light sensors, that read
 the position of a set of lights displaced over the nest.
+
+Here User function is used to get variables from loop function and pass
+it in JSON to clients. Chart.js is used for drawing bar chart. fabric.js is
+used for 2D graph.
 
 To Run, start argos in one terminal
 ```console
