@@ -1,17 +1,18 @@
 #ifndef FORAGING_LOOP_FUNCTIONS_H
 #define FORAGING_LOOP_FUNCTIONS_H
 
-#include <argos3/core/simulator/loop_functions.h>
 #include <argos3/core/simulator/entity/floor_entity.h>
+#include <argos3/core/simulator/loop_functions.h>
 #include <argos3/core/utility/math/range.h>
 #include <argos3/core/utility/math/rng.h>
 
+#include <mutex>
+#include <nlohmann/json.hpp>
+
 using namespace argos;
 
-class CForagingLoopFunctions : public CLoopFunctions
-{
-
-public:
+class CForagingLoopFunctions : public CLoopFunctions {
+ public:
   CForagingLoopFunctions();
   virtual ~CForagingLoopFunctions() {}
 
@@ -21,7 +22,9 @@ public:
   virtual CColor GetFloorColor(const CVector2 &c_position_on_plane);
   virtual void PreStep();
 
-private:
+  const nlohmann::json GetStatus();
+
+ private:
   Real m_fFoodSquareRadius;
   CRange<Real> m_cForagingArenaSideX, m_cForagingArenaSideY;
   std::vector<CVector2> m_cFoodPos;
@@ -35,6 +38,9 @@ private:
   SInt64 m_nEnergy;
   UInt32 m_unEnergyPerFoodItem;
   UInt32 m_unEnergyPerWalkingRobot;
+
+  std::mutex m_cJsonMutex;
+  nlohmann::json m_cOutputJson;
 };
 
 #endif

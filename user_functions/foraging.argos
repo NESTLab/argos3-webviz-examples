@@ -108,7 +108,7 @@
   <!-- ****************** -->
   <visualization>
     <webviz>
-      <!-- <user_functions label="foraging_qt_user_functions" /> -->
+      <user_functions library="build/user_functions/libforaging_user_functions" label="foraging_user_functions" />
     </webviz>
   </visualization>
 

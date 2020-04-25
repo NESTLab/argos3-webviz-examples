@@ -18,29 +18,12 @@ var send = function (json_object) {
 socket.onmessage = function (event) {
   var json = JSON.parse(event.data)
 
+  // console.log(json.extra_data);
+
   stateDom.innerHTML = json.state
   stepDom.innerHTML = json.steps
 
-  var robotCount = 0, boxCount = 0, cylinderCount = 0
-
-  // // Create a new instance of the Image class
-  // var img = new Image();
-
-  // // When the image loads, set it as background image
-  // img.onload = function () {
-  //   var f_img = new fabric.Image(img);
-
-  //   canvas.setBackgroundImage(f_img, canvas.renderAll.bind(canvas), {
-  //     width: canvas_size / 2,
-  //     height: canvas_size / 2,
-  //     // Needed to position backgroundImage at 0/0
-  //     originX: 'left',
-  //     originY: 'top'
-  //   });
-
-  //   canvas.renderAll();
-  // };
-
+  var robotCount = 0
 
   for (var i = 0; i < json.entities.length; i++) {
     const entity = json.entities[i];
